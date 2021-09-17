@@ -3,10 +3,10 @@
 void Roster::parseAndAdd(string studentData)
 {
 	DegreeProgram degreeProgram = DegreeProgram::SOFTWARE;
-	int rightSide = studentData.find(',');
+	size_t rightSide = studentData.find(',');
 	string studentID = studentData.substr(0, rightSide);
 
-	int leftSide = rightSide + 1;
+	size_t leftSide = rightSide + 1;
 	rightSide = studentData.find(',', leftSide);
 	string firstName = studentData.substr(leftSide, rightSide - leftSide);
 
@@ -56,14 +56,15 @@ void Roster::parseAndAdd(string studentData)
 void Roster::add(string studentID, string firstName, string lastName, string emailAddress, int age, int daysToCompleteCourse1, int daysToCompleteCourse2, int daysToCompleteCourse3, DegreeProgram degreeProgram)
 {
 	int daysToCompleteCourse[] = { daysToCompleteCourse1, daysToCompleteCourse2, daysToCompleteCourse3 };
-	lastIndex++;
-	classRosterArray[lastIndex] = new Student(studentID, firstName, lastName, emailAddress, age, daysToCompleteCourse, degreeProgram);
+	lastArrayIndex++;
+	classRosterArray[lastArrayIndex] = new Student(studentID, firstName, lastName, emailAddress, age, daysToCompleteCourse, degreeProgram);
+	numberOfStudents++;
 }
 
 void Roster::printAll()
 {
 	std::cout << "Displaying all students:" << std::endl;
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < numberOfStudents; i++)
 	{
 		classRosterArray[i]->Print();
 	}
@@ -108,7 +109,37 @@ void Roster::printByDegreeProgram(DegreeProgram degreeProgram)
 
 void Roster::remove(string studentID)
 {
-	// You left off here.
+	bool idFound = false;
+	std::cout << "Removing " << studentID << std::endl;
+	for (int i = 0; i < 5; i++)
+	{
+		if (classRosterArray[i]->getStudentID() == studentID)
+		{
+			idFound = true;
+			for (int j = i; j < (numberOfStudents - 1); j++)
+			{
+				classRosterArray[j] = classRosterArray[j + 1];
+			}
+			lastArrayIndex--;
+			numberOfStudents--;
+			break;
+		}
+		else
+		{
+			continue;
+		}
+	}
+
+	if (idFound)
+	{
+		std::cout << "The student with the ID: " << studentID << " has been removed." << std::endl;
+	}
+	else
+	{
+		std::cout << "The student with the ID: " << studentID << " is not found." << std::endl;
+	}
+
+	std::cout << std::endl;
 }
 
 void Roster::printAverageDaysInCourse(string studentID)

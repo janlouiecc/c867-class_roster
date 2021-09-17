@@ -10,8 +10,9 @@ using std::string;
 class Roster 
 {
 private:
-	int lastIndex = -1;
 	Student* classRosterArray[5]{};
+	int lastArrayIndex = -1;
+	int numberOfStudents = 0;
 
 public:
 	void parseAndAdd(string studentData);

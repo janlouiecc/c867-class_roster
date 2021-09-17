@@ -1,9 +1,8 @@
-#include "degree.h"
 #include "roster.h"
-#include "student.h"
 #include <iostream>
 
-using namespace std;
+using std::cout;
+using std::endl;
 
 int main()
 {
@@ -28,25 +27,28 @@ int main()
 		classRoster.parseAndAdd(studentData[i]);
 	}
 
-	classRoster.printAll();
-	
+	classRoster.printAll();	
 	classRoster.printInvalidEmails();
 
-	classRoster.printAverageDaysInCourse("A1");
-	classRoster.printAverageDaysInCourse("A2");
-	classRoster.printAverageDaysInCourse("A3");
-	classRoster.printAverageDaysInCourse("A4");
-	classRoster.printAverageDaysInCourse("A5");
-	
+	for (int i = 0; i < 5; i++)
+	{
+		string ID;
+		switch (i)
+		{
+		case 0: ID = "A1"; break;
+		case 1: ID = "A2"; break;
+		case 2: ID = "A3"; break;
+		case 3: ID = "A4"; break;
+		case 4: ID = "A5"; break;
+		}
+		classRoster.printAverageDaysInCourse(ID);
+	}
 	cout << endl;
-
+	
 	classRoster.printByDegreeProgram(DegreeProgram::SOFTWARE);
-
-	// classRoster.remove("A3");
-	
+	classRoster.remove("A3");	
 	classRoster.printAll();
-	
-	// classRoster.remove("A3");*/
+	classRoster.remove("A3");
 
 	return 0;
 }
